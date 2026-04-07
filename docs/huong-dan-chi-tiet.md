@@ -419,41 +419,41 @@ if __name__ == "__main__":
 ```mermaid
 sequenceDiagram
     participant U as User
-    participant Loop as Agent Loop
+    participant AG as Agent Loop
     participant LLM as Claude
     participant W as get_weather
     participant C as calculate
 
-    U->>Loop: So sanh HN va HCM, chenh bao nhieu?
+    U->>AG: So sanh HN va HCM, chenh bao nhieu?
 
     rect rgb(40, 40, 80)
-        Note over Loop,LLM: Vong lap 1
-        Loop->>LLM: messages (1 msg)
-        LLM-->>Loop: finish_reason: tool_calls
+        Note over AG,LLM: Vong lap 1
+        AG->>LLM: messages (1 msg)
+        LLM-->>AG: finish_reason: tool_calls
         Note over LLM: Can data 2 thanh pho
-        Loop->>W: get_weather(Ha Noi)
-        W-->>Loop: 28C, mua nhe
-        Loop->>W: get_weather(Ho Chi Minh)
-        W-->>Loop: 34C, nang
+        AG->>W: get_weather(Ha Noi)
+        W-->>AG: 28C, mua nhe
+        AG->>W: get_weather(Ho Chi Minh)
+        W-->>AG: 34C, nang
     end
 
     rect rgb(40, 60, 40)
-        Note over Loop,LLM: Vong lap 2
-        Loop->>LLM: messages (4 msgs)
-        LLM-->>Loop: finish_reason: tool_calls
+        Note over AG,LLM: Vong lap 2
+        AG->>LLM: messages (4 msgs)
+        LLM-->>AG: finish_reason: tool_calls
         Note over LLM: Tinh chenh lech: 34-28
-        Loop->>C: calculate(34-28)
-        C-->>Loop: 6
+        AG->>C: calculate(34-28)
+        C-->>AG: 6
     end
 
     rect rgb(60, 40, 60)
-        Note over Loop,LLM: Vong lap 3 (cuoi)
-        Loop->>LLM: messages (6 msgs)
-        LLM-->>Loop: finish_reason: stop
+        Note over AG,LLM: Vong lap 3 (cuoi)
+        AG->>LLM: messages (6 msgs)
+        LLM-->>AG: finish_reason: stop
         Note over LLM: Du data roi, tra loi thoi
     end
 
-    Loop->>U: HCM nong hon HN 6C
+    AG->>U: HCM nong hon HN 6C
 ```
 
 **Điểm quan trọng:** LLM tự quyết định:
