@@ -18,7 +18,7 @@ client = OpenAI(
     api_key=os.getenv("OPENROUTER_API_KEY"),
 )
 
-MODEL = "anthropic/claude-sonnet-4"
+MODEL = "anthropic/claude-haiku-4.5"
 
 
 # ── BƯỚC 1: Define tools (tay chân của agent) ──

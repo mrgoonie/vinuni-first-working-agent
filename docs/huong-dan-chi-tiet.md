@@ -104,51 +104,51 @@ flowchart TD
 
 ```mermaid
 sequenceDiagram
-    participant U as 👤 User
-    participant A as ♻️ Agent Loop
-    participant L as 🧠 LLM (Claude)
-    participant T as 🔧 get_weather()
+    participant U as User
+    participant A as Agent Loop
+    participant L as LLM (Claude)
+    participant T as get_weather()
 
-    U->>A: "Thời tiết Hà Nội?"
+    U->>A: Thoi tiet Ha Noi?
     A->>L: messages + tools_schema
-    L-->>A: tool_calls: get_weather(city="Ha Noi")
-    A->>T: get_weather("Ha Noi")
-    T-->>A: "28°C, mưa nhẹ, độ ẩm 80%"
+    L-->>A: tool_calls: get_weather(city=Ha Noi)
+    A->>T: get_weather(Ha Noi)
+    T-->>A: 28C, mua nhe, do am 80%
     A->>L: messages + tool_result
-    L-->>A: "Hà Nội hôm nay 28°C, mưa nhẹ..."
-    A->>U: 💬 Trả lời cuối cùng
+    L-->>A: Ha Noi hom nay 28C, mua nhe...
+    A->>U: Tra loi cuoi cung
 ```
 
 ### Sequence Diagram: Multi-tool task
 
 ```mermaid
 sequenceDiagram
-    participant U as 👤 User
-    participant A as ♻️ Agent Loop
-    participant L as 🧠 LLM (Claude)
-    participant W as 🌤️ get_weather()
-    participant C as 🔢 calculate()
+    participant U as User
+    participant A as Agent Loop
+    participant L as LLM (Claude)
+    participant W as get_weather()
+    participant C as calculate()
 
-    U->>A: "So sánh HN & HCM, chênh bao nhiêu độ?"
+    U->>A: So sanh HN va HCM, chenh bao nhieu do?
 
-    Note over A,L: Vòng lặp 1
+    Note over A,L: Vong lap 1
     A->>L: messages + tools_schema
-    L-->>A: tool_calls: get_weather("Ha Noi") + get_weather("Ho Chi Minh")
-    A->>W: get_weather("Ha Noi")
-    W-->>A: "28°C, mưa nhẹ"
-    A->>W: get_weather("Ho Chi Minh")
-    W-->>A: "34°C, nắng"
+    L-->>A: tool_calls: get_weather(Ha Noi) + get_weather(Ho Chi Minh)
+    A->>W: get_weather(Ha Noi)
+    W-->>A: 28C, mua nhe
+    A->>W: get_weather(Ho Chi Minh)
+    W-->>A: 34C, nang
 
-    Note over A,L: Vòng lặp 2
+    Note over A,L: Vong lap 2
     A->>L: messages + tool_results
-    L-->>A: tool_calls: calculate("34-28")
-    A->>C: calculate("34-28")
-    C-->>A: "6"
+    L-->>A: tool_calls: calculate(34-28)
+    A->>C: calculate(34-28)
+    C-->>A: 6
 
-    Note over A,L: Vòng lặp 3
+    Note over A,L: Vong lap 3
     A->>L: messages + tool_result
-    L-->>A: "Chênh lệch 6°C, HCM nóng hơn"
-    A->>U: 💬 Trả lời cuối cùng
+    L-->>A: Chenh lech 6C, HCM nong hon
+    A->>U: Tra loi cuoi cung
 ```
 
 ---
@@ -418,42 +418,42 @@ if __name__ == "__main__":
 
 ```mermaid
 sequenceDiagram
-    participant U as 👤 User
-    participant Loop as ♻️ while True
-    participant LLM as 🧠 Claude
-    participant W as 🌤️ get_weather
-    participant C as 🔢 calculate
+    participant U as User
+    participant Loop as Agent Loop
+    participant LLM as Claude
+    participant W as get_weather
+    participant C as calculate
 
-    U->>Loop: "So sánh HN & HCM, chênh bao nhiêu?"
+    U->>Loop: So sanh HN va HCM, chenh bao nhieu?
 
     rect rgb(40, 40, 80)
-        Note over Loop,LLM: 🔄 Vòng lặp 1
+        Note over Loop,LLM: Vong lap 1
         Loop->>LLM: messages (1 msg)
-        LLM-->>Loop: finish_reason: "tool_calls"
-        Note over LLM: Tôi cần data 2 thành phố
-        Loop->>W: get_weather("Ha Noi")
-        W-->>Loop: "28°C, mưa nhẹ"
-        Loop->>W: get_weather("Ho Chi Minh")
-        W-->>Loop: "34°C, nắng"
+        LLM-->>Loop: finish_reason: tool_calls
+        Note over LLM: Can data 2 thanh pho
+        Loop->>W: get_weather(Ha Noi)
+        W-->>Loop: 28C, mua nhe
+        Loop->>W: get_weather(Ho Chi Minh)
+        W-->>Loop: 34C, nang
     end
 
     rect rgb(40, 60, 40)
-        Note over Loop,LLM: 🔄 Vòng lặp 2
+        Note over Loop,LLM: Vong lap 2
         Loop->>LLM: messages (4 msgs)
-        LLM-->>Loop: finish_reason: "tool_calls"
-        Note over LLM: Giờ tính chênh lệch: 34-28
-        Loop->>C: calculate("34-28")
-        C-->>Loop: "6"
+        LLM-->>Loop: finish_reason: tool_calls
+        Note over LLM: Tinh chenh lech: 34-28
+        Loop->>C: calculate(34-28)
+        C-->>Loop: 6
     end
 
     rect rgb(60, 40, 60)
-        Note over Loop,LLM: 🔄 Vòng lặp 3 (cuối)
+        Note over Loop,LLM: Vong lap 3 (cuoi)
         Loop->>LLM: messages (6 msgs)
-        LLM-->>Loop: finish_reason: "stop"
-        Note over LLM: Đủ data rồi, trả lời thôi!
+        LLM-->>Loop: finish_reason: stop
+        Note over LLM: Du data roi, tra loi thoi
     end
 
-    Loop->>U: "HCM nóng hơn HN 6°C"
+    Loop->>U: HCM nong hon HN 6C
 ```
 
 **Điểm quan trọng:** LLM tự quyết định:
