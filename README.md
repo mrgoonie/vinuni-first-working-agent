@@ -151,7 +151,7 @@ tools_map["get_exchange_rate"] = get_exchange_rate
 
 ## Slides
 
-📺 [Xem slides workshop](https://api.agentwiki.cc/s/nLGnEgJFcztu73USoUE8I/)
+📺 [Xem slides workshop](https://api.agentwiki.cc/s/AIeCZf15nueY84xjMwfrK/)
 
 ## License
 
